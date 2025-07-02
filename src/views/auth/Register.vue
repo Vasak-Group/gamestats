@@ -1,3 +1,7 @@
+<script lang="ts" setup>
+import { RouterLink } from "vue-router";
+</script>
+
 <template>
   <section class="flex items-center justify-center py-20 h-screen w-screen">
     <div
@@ -55,9 +59,13 @@
           <div class="account-text mt-5 text-center">
             <p>
               Already have account,
-              <a class="font-semibold text-yellow-400" href="/login"
-                >Login here</a
-              >
+              <RouterLink class="font-semibold text-yellow-400" to="/login">
+                Login here
+              </RouterLink>
+              or
+              <RouterLink class="text-yellow-400 font-semibold" to="/">
+                go to home
+              </RouterLink>
             </p>
           </div>
         </form>
