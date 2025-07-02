@@ -16,7 +16,7 @@
           Simply text of the printing and typesetting industry.
         </p>
         <a
-          class="text-white inline-block bg-primary text-center font-bold group hover:opacity-80  rounded-xl p-4"
+          class="text-white inline-block bg-primary text-center font-bold group hover:opacity-80  rounded-2xl p-4"
           href="/contact-us"
           >Play Now
         </a>
