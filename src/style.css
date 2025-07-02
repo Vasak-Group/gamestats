@@ -1,1 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap");
 @import "tailwindcss";
+
+
+@theme{
+  --color-primary: #b154f0;
+  --color-secondary: #140e38;
+}
+
+body {
+  @apply bg-black text-white bg-cover bg-no-repeat bg-center;
+  background-image: url("@/assets/img/body-bg.webp");
+}
+
+.logo {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 700;
+}
+
