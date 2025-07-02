@@ -6,7 +6,7 @@
       <div class="image">
         <img
           class="w-full h-full object-cover"
-          src="@/assets/img/login-thumb.webp"
+          src="@/assets/img/auth.webp"
           alt="Login Thumb"
         />
       </div>
