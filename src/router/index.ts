@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { loadLayoutMiddleware } from "@/router/middleware/loadLayoutMiddleware";
+import { secureMiddleware } from "./middleware/secureURLMiddleware";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -34,5 +35,6 @@ const router = createRouter({
 });
 
 router.beforeEach(loadLayoutMiddleware);
+router.beforeEach(secureMiddleware);
 
 export default router;
