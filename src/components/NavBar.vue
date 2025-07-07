@@ -1,10 +1,14 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { RouterLink } from "vue-router";
+import { authStore } from "@/stores/auth.store";
+import { useToast } from "vue-toast-notification";
 
+const auth = authStore();
 const isOpen = ref(false);
+const $toast = useToast();
 
-const menuItems = [
+const menuItemsInvited = [
   { name: "Home", path: "/" },
   {
     name: "Servers",
@@ -12,6 +16,26 @@ const menuItems = [
     children: [{ name: "Rank", path: "/servers/rank" }],
   },
 ];
+
+const menuItemsUser = [
+  { name: "Home", path: "/" },
+  {
+    name: "Servers",
+    path: "/servers",
+    children: [
+      { name: "Rank", path: "/servers/rank" },
+      { name: "My Servers", path: "/servers/my" },
+    ],
+  },
+];
+
+const menuItems = computed(() => {
+  if (auth.isAuthenticated()) {
+    return menuItemsUser;
+  } else {
+    return menuItemsInvited;
+  }
+});
 
 const toggleMenu = () => {
   isOpen.value = !isOpen.value;
@@ -64,9 +88,31 @@ const openSubmenu = (name: string) => {
           </ul>
 
           <div class="header-right-action flex items-center">
+            <ul
+              v-if="auth.isAuthenticated()"
+              class="hidden lg:flex lg:items-center lg:w-auto lg:space-x-12"
+            >
+              <li
+                class="group relative pt-4 pb-4 cursor-pointer text-white font-bold z-10 before:bg-nav-shape before:empty-content before:absolute before:w-23.5 before:h-11 before:z-n1 before:top-1/2 before:left-1/2 before:transform before:-translate-x-2/4 before:-translate-y-2/4 before:transition-all before:opacity-0 hover:before:opacity-100"
+              >
+                {{ auth.user?.username }}
+                <ul
+                  class="submenu-nav absolute left-0 z-50 bg-secondary/90 rounded-lg mt-14 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-4 transition-all duration-500 p-4 w-44"
+                >
+                  <li>
+                    <RouterLink
+                      class="menu-sub-item text-sm font-medium block py-1 hover:text-primary"
+                      to="/profile"
+                      >Profile
+                    </RouterLink>
+                  </li>
+                </ul>
+              </li>
+            </ul>
             <RouterLink
+              v-else
               class="text-white hidden xs:block inline-block text-center font-bold group hover:opacity-80 leading-11 sm:leading-12 rounded-2xl bg-primary px-4"
-              to="/login"
+              to="/register"
               >SIGN UP
             </RouterLink>
 
@@ -131,10 +177,37 @@ const openSubmenu = (name: string) => {
                 </ul>
 
                 <div class="action-button text-center">
+                  <ul class="mt-10 mb-10">
+                    <li
+                      class="relative font-medium block pb-3 mb-3"
+                    >
+                      {{ auth.user?.username }}
+                      <button
+                        @click="openSubmenu(auth.user?.username)"
+                        class="absolute right-0 justify-center cursor-pointer bg-transparent"
+                      >
+                        mas
+                      </button>
+                      <ul
+                        :id="`submenu-${auth.user?.username}`"
+                        class="submenu-nav hidden mt-4"
+                      >
+                        <li>
+                          <RouterLink
+                            class="font-medium block pb-3 mb-3 px-3 border-b last:mb-0 last:border-0 hover:text-primary"
+                            to="/profile"
+                            @click="toggleMenu"
+                          >
+                            Profile
+                          </RouterLink>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
                   <RouterLink
                     aria-current="page"
                     class="text-white font-exo inline-block text-center font-bold group hover:opacity-80 leading-11 px-4 sm:leading-12 rounded-2xl bg-primary"
-                    to="/"
+                    to="/register"
                     @click="toggleMenu"
                   >
                     SIGN UP
