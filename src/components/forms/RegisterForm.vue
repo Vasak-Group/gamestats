@@ -69,9 +69,9 @@ const register = () => {
   };
 
   api
-    .POST("/auth/register", data, "")
+    .POST("/users", data, "")
     .then((response) => {
-      if (response.status === 201) {
+      if (response.status == 201) {
         registerSuccess.value = true;
         setTimeout(() => {
           window.location.href = "/login";
