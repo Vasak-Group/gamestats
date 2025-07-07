@@ -1,35 +1,20 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { api } from "@/services/backendConnector";
 
 export const authStore = defineStore("auth", () => {
-  const user = ref(null);
-  const token = ref("");
+  const user = ref(JSON.parse(localStorage.getItem("user") || "null"));
+  const token = ref(localStorage.getItem("token"));
 
-  function setUser(newUser: any) {
-    user.value = newUser;
+  function setSession(userData: any, authToken: string) {
+    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("token", authToken);
+    user.value = userData;
+    token.value = authToken;
   }
 
   function clearUser() {
     user.value = null;
     token.value = "";
-  }
-
-  function auth(email: string, password: string) {
-    api
-      .POST("/auth/login", { email, password }, token.value)
-      .then((response: any) => {
-        if (response.token) {
-          token.value = response.token;
-          user.value = response.user;
-        } else {
-          throw new Error("Authentication failed");
-        }
-      })
-      .catch((error: any) => {
-        console.error("Authentication error:", error);
-        clearUser();
-      });
   }
 
   function isAuthenticated() {
@@ -40,7 +25,7 @@ export const authStore = defineStore("auth", () => {
     user,
     isAuthenticated,
     token,
-    setUser,
+    setSession,
     clearUser,
   };
 });
