@@ -2,11 +2,9 @@
 import { api } from "@/services/backendConnector";
 import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
+import { useToast } from "vue-toast-notification";
 
-const registerSuccess = ref(false);
-const registerError = ref(false);
-const errorTitle = ref("");
-const errorInfo = ref("");
+const $toast = useToast();
 const formData = ref({
   username: "",
   email: "",
@@ -35,31 +33,40 @@ const validPassword = computed(() => {
   );
 });
 
-const register = () => {
+const register = async () => {
   if (!validEmail.value) {
-    errorTitle.value = "Invalid email";
-    errorInfo.value = "Please check your email and try again.";
+    const errorTitle = "Invalid email";
+    let errorInfo = "Please check your email and try again.";
     if (formData.value.email !== formData.value.repeatEmail) {
-      errorInfo.value += " Emails do not match.";
+      errorInfo += " Emails do not match.";
     }
     if (!formData.value.email || !formData.value.repeatEmail) {
-      errorInfo.value += " Email fields cannot be empty.";
+      errorInfo += " Email fields cannot be empty.";
     }
-    console.error("Email validation failed:", errorInfo.value);
-    errorInfo.value = errorInfo.value.trim();
-    if (errorInfo.value === "") {
-      errorInfo.value = "Please enter a valid email address.";
+    console.error("Email validation failed:", errorInfo);
+    errorInfo = errorInfo.trim();
+    if (errorInfo === "") {
+      errorInfo = "Please enter a valid email address.";
     }
 
-    console.error("Email validation error:", errorInfo.value);
-    registerError.value = true;
+    console.error("Email validation error:", errorInfo);
+    $toast.error(`${errorTitle} : ${errorInfo}`, {
+      position: "top-right",
+      duration: 3000,
+    });
     return;
   }
   if (!validPassword.value) {
-    console.error("Password validation failed:", formData.value);
-    errorTitle.value = "Invalid password";
-    errorInfo.value = "Please check your password and try again.";
-    registerError.value = true;
+    const errorTitle = "Invalid password";
+    let errorInfo = "Please check your password and try again.";
+    if (!formData.value.password || !formData.value.repeatPassword) {
+      errorInfo += " Password fields cannot be empty.";
+    }
+    console.error("Password validation error:", errorInfo);
+    $toast.error(`${errorTitle} : ${errorInfo}`, {
+      position: "top-right",
+      duration: 3000,
+    });
     return;
   }
   const data = {
@@ -68,27 +75,37 @@ const register = () => {
     password: formData.value.password,
   };
 
-  api
-    .POST("/users", data, "")
-    .then((response) => {
-      if (response.status == 201) {
-        registerSuccess.value = true;
-        setTimeout(() => {
-          window.location.href = "/login";
-        }, 2000);
-      } else {
-        console.error("Registration failed:", response);
-        errorTitle.value = "Registration failed";
-        errorInfo.value = "Please try again later.";
-        registerError.value = true;
-      }
-    })
-    .catch((error) => {
-      console.error("Registration error:", error);
-      errorTitle.value = "Registration failed";
-      errorInfo.value = "Please try again later.";
-      registerError.value = true;
+  try {
+    const response = await api.POST("/users", data, "");
+    console.log("Registration response:", response);
+
+    if (response.status == 201) {
+      $toast.success("Registration successful", {
+        position: "top-right",
+        duration: 3000,
+      });
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
+    } else {
+      const error = await response.json();
+      console.error("Registration failed:", error);
+      $toast.error(
+        `Registration failed: Please check your data [${error.message}]`,
+        {
+          position: "top-right",
+          duration: 3000,
+        }
+      );
+    }
+  } catch (error) {
+    console.error("Error during registration:", error);
+    $toast.error("Registration failed: Please try again later.", {
+      position: "top-right",
+      duration: 3000,
     });
+    return;
+  }
 };
 </script>
 

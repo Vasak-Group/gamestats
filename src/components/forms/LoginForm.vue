@@ -1,27 +1,26 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
 import { ref } from "vue";
+import { useToast } from "vue-toast-notification";
 import { authStore } from "@/stores/auth.store";
 import { api } from "@/services/backendConnector";
 
+const $toast = useToast();
 const auth = authStore();
 const credentials = ref({
   email: "",
   password: "",
 });
 
-const loginSuccess = ref(false);
-const loginError = ref(false);
-const errorTitle = ref("");
-const errorInfo = ref("");
-
 const login = async () => {
   if (!credentials.value.email || !credentials.value.password) {
-    errorTitle.value = "Missing credentials";
-    errorInfo.value = "Please enter both email and password.";
-    loginError.value = true;
+    $toast.error("Missing credentials", {
+      position: "top-right",
+      duration: 3000,
+    });
     return;
   }
+
   try {
     const response = await api.POST("/auth/login", credentials.value, "");
 
@@ -37,24 +36,33 @@ const login = async () => {
 
       const userData = await userResponse.json();
 
-      loginSuccess.value = true;
       auth.setSession(userData.user, data.access_token);
+
+      $toast.success("Login successful", {
+        position: "top-right",
+        duration: 3000,
+      });
 
       setTimeout(() => {
         window.location.href = "/";
       }, 2000);
     } else {
       console.error("Login failed:", response);
-      errorTitle.value = "Login failed";
-      errorInfo.value = "Please check your credentials and try again.";
-      loginError.value = true;
+      $toast.error("Login failed: Check your credentials", {
+        position: "top-right",
+        duration: 3000,
+      });
     }
   } catch (e) {
     console.error("Login error:", e);
-    errorTitle.value = "Login error";
-    errorInfo.value = "An unexpected error occurred. Please try again later.";
-    loginError.value = true;
-    return;
+
+    $toast.error(
+      "Login error: An unexpected error occurred. Please try again later.",
+      {
+        position: "top-right",
+        duration: 3000,
+      }
+    );
   }
 };
 </script>
