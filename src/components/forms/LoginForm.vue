@@ -28,7 +28,7 @@ const login = async () => {
 
     if (response.status === 200) {
       const data = await response.json();
-      const userResponse = await api.GET("/users/me", data.access_token);
+      const userResponse = await api.GET("/user/me", data.access_token);
 
       if (userResponse.status !== 200) {
         throw new Error("Failed to fetch user data");

@@ -76,7 +76,7 @@ const register = async () => {
   };
 
   try {
-    const response = await api.POST("/users", data, "");
+    const response = await api.POST("/user", data, "");
     console.log("Registration response:", response);
 
     if (response.status == 201) {
