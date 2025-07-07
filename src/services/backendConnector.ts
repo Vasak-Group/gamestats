@@ -11,7 +11,7 @@ export const api = {
           },
         }
       );
-      return response.json();
+      return response;
     } catch (error) {
       console.error(error);
       throw error;
@@ -30,7 +30,7 @@ export const api = {
           body: JSON.stringify(data),
         }
       );
-      return response.json();
+      return response;
     } catch (error) {
       console.error(error);
       throw error;
@@ -48,7 +48,7 @@ export const api = {
           },
         }
       );
-      return response.json();
+      return response;
     } catch (error) {
       console.error(error);
       throw error;
