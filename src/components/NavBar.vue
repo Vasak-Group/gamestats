@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref, useAttrs } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { authStore } from "@/stores/auth.store";
 import { useToast } from "vue-toast-notification";
@@ -59,6 +59,17 @@ const openSubmenu = (name: string) => {
   if (submenu) {
     submenu.classList.toggle("hidden");
   }
+};
+
+const logout = () => {
+  auth.clearUser();
+  $toast.success("Logout successful", {
+    position: "top-right",
+    duration: 3000,
+  });
+  setTimeout(() => {
+    window.location.href = "/";
+  }, 2000);
 };
 
 onMounted(() => {
@@ -127,6 +138,14 @@ onMounted(() => {
                       to="/profile"
                       >Profile
                     </RouterLink>
+                  </li>
+                  <li>
+                    <span
+                      class="menu-sub-item text-sm font-medium block py-1 hover:text-primary"
+                      @click="logout"
+                    >
+                      Logout
+                    </span>
                   </li>
                 </ul>
               </li>
@@ -225,6 +244,14 @@ onMounted(() => {
                           >
                             Profile
                           </RouterLink>
+                        </li>
+                        <li>
+                          <span
+                            class="font-medium block pb-3 mb-3 px-3 border-b last:mb-0 last:border-0 hover:text-primary"
+                            @click="logout"
+                          >
+                            Logout
+                          </span>
                         </li>
                       </ul>
                     </li>
