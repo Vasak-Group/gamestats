@@ -28,15 +28,8 @@ const login = async () => {
 
     if (response.status === 200) {
       const data = await response.json();
-      const userResponse = await api.GET("/user/me", data.access_token);
 
-      if (userResponse.status !== 200) {
-        throw new Error("Failed to fetch user data");
-      }
-
-      const userData = await userResponse.json();
-
-      auth.setSession(userData.user, data.access_token);
+      auth.setSession(data.access_token);
 
       $toast.success("Login successful", {
         position: "top-right",

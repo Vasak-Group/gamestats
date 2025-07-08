@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, reactive, ref, useAttrs } from "vue";
 import { RouterLink } from "vue-router";
 import { authStore } from "@/stores/auth.store";
 import { useToast } from "vue-toast-notification";
@@ -8,6 +8,12 @@ import md5 from "md5";
 const auth = authStore();
 const isOpen = ref(false);
 const $toast = useToast();
+const user = ref({} as any);
+
+const fetchUser = async () => {
+  const userData = await auth.user();
+  user.value = userData || {};
+};
 
 const menuItemsInvited = [
   { name: "Home", path: "/" },
@@ -39,7 +45,9 @@ const menuItems = computed(() => {
 });
 
 const profileImage = computed(() => {
-  return `https://www.gravatar.com/avatar/${md5(auth.user?.email || "")}?d=identicon`;
+  return `https://www.gravatar.com/avatar/${md5(
+    user.value.email || ""
+  )}?d=identicon`;
 });
 
 const toggleMenu = () => {
@@ -52,6 +60,10 @@ const openSubmenu = (name: string) => {
     submenu.classList.toggle("hidden");
   }
 };
+
+onMounted(() => {
+  fetchUser();
+});
 </script>
 
 <template>
@@ -100,7 +112,8 @@ const openSubmenu = (name: string) => {
               <li
                 class="group relative pt-4 pb-4 cursor-pointer text-white font-bold z-10 before:bg-nav-shape before:empty-content before:absolute before:w-23.5 before:h-11 before:z-n1 before:top-1/2 before:left-1/2 before:transform before:-translate-x-2/4 before:-translate-y-2/4 before:transition-all before:opacity-0 hover:before:opacity-100"
               >
-                {{ auth.user?.username }} <img
+                {{ user.username }}
+                <img
                   :src="profileImage"
                   alt="Profile Image"
                   class="inline-block w-8 h-8 rounded-full ml-2"
@@ -187,22 +200,21 @@ const openSubmenu = (name: string) => {
 
                 <div class="action-button text-center">
                   <ul class="mt-10 mb-10">
-                    <li
-                      class="relative font-medium block pb-3 mb-3"
-                    >
-                      {{ auth.user?.username }} <img
+                    <li class="relative font-medium block pb-3 mb-3">
+                      {{ user.username }}
+                      <img
                         :src="profileImage"
                         alt="Profile Image"
                         class="inline-block w-8 h-8 rounded-full ml-2"
                       />
                       <button
-                        @click="openSubmenu(auth.user?.username)"
+                        @click="openSubmenu(user.username)"
                         class="absolute right-0 justify-center cursor-pointer bg-transparent"
                       >
                         mas
                       </button>
                       <ul
-                        :id="`submenu-${auth.user?.username}`"
+                        :id="`submenu-${user.username}`"
                         class="submenu-nav hidden mt-4"
                       >
                         <li>

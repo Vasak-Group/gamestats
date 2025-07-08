@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { loadLayoutMiddleware } from "@/router/middleware/loadLayoutMiddleware";
-import { secureMiddleware } from "./middleware/secureURLMiddleware";
+import { secureMiddleware } from "@/router/middleware/secureURLMiddleware";
 
 const routes: Array<RouteRecordRaw> = [
   {
