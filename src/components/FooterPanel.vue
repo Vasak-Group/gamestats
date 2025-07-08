@@ -9,9 +9,9 @@
           class="grid gap-8 md:gap-6 lg:gap-6 xxl:gap-16 grid-cols-1 sm:grid-cols-12"
         >
           <div class="sm:col-span-6 lg:col-span-4 lg:mr-12">
-            <a class="block logo text-center text-5xl" href="/"> GAMESTATS </a>
+            <a class="block logo text-center text-5xl" href="/"> TOPGAMES </a>
             <p class="mt-7">
-              GameStats is a platform that provides detailed statistics and
+              TOPGAMES is a platform that provides detailed statistics and
               insights for various games. Our mission is to enhance the gaming
               experience by offering comprehensive data analysis and community
               engagement.

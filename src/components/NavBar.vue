@@ -76,7 +76,7 @@ onMounted(() => {
             class="block logo text-3xl leading-none"
             to="/"
           >
-            GAMESTATS
+            TOPGAMES
           </RouterLink>
 
           <ul class="hidden lg:flex lg:items-center lg:w-auto lg:space-x-12">
