@@ -36,6 +36,33 @@ const routes: Array<RouteRecordRaw> = [
       requiresAuth: true,
     },
   },
+  {
+    path: "/servers",
+    name: "Servers",
+    redirect: { name: "ServerRank" },
+    meta: {
+      layout: "WebSiteLayout",
+    },
+    children: [
+      {
+        path: "my",
+        name: "MyServers",
+        component: () => import("@/views/servers/MyServers.vue"),
+        meta: {
+          layout: "WebSiteLayout",
+          requiresAuth: true,
+        },
+      },
+      {
+        path: "rank",
+        name: "ServerRank",
+        component: () => import("@/views/servers/Servers.vue"),
+        meta: {
+          layout: "WebSiteLayout",
+        },
+      },
+    ],
+  },
 ];
 
 const router = createRouter({
