@@ -27,6 +27,15 @@ const routes: Array<RouteRecordRaw> = [
       layout: "CleanLayout",
     },
   },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("@/views/Profile.vue"),
+    meta: {
+      layout: "WebSiteLayout",
+      requiresAuth: true,
+    },
+  },
 ];
 
 const router = createRouter({
