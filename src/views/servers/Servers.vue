@@ -1,5 +1,22 @@
 <script setup lang="ts">
 import breadcrumbsIMG from "@/assets/img/breadcrumbs-bg.webp";
+import { ServerGame } from "@/enums/games";
+import { ref } from "vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const currentGame = ref(route.query.game as ServerGame | undefined);
+const serverName = ref(route.query.serverName as string | undefined);
+const pageParam = ref(route.query.page);
+const page = ref(
+  typeof pageParam.value === "string" ? Number(pageParam.value) : 0
+);
+const itemsPerPageParam = ref(route.query.itemsPerPage);
+const itemsPerPage = ref(
+  typeof itemsPerPageParam.value === "string"
+    ? Number(itemsPerPageParam.value)
+    : 10
+);
 </script>
 
 <template>
@@ -17,17 +34,39 @@ import breadcrumbsIMG from "@/assets/img/breadcrumbs-bg.webp";
       <div class="filter-wrap bg-secondary/70 rounded-2xl px-5 py-7 mb-10">
         <div class="flex justify-between">
           <div class="category-filter">
-            <div class="filter-option">
-              <select
+            <div class="flex items-center gap-4">
+              <input
                 id="cats"
                 class="px-5 h-14 sm:w-64 border-secondary/90 text-white bg-secondary/100 border-2 border-solid rounded-lg focus:outline-none"
+                list="games"
+                placeholder="Select a game"
+                v-model="currentGame"
+                @change="
+                  $router.push({
+                    query: { ...$route.query, game: currentGame },
+                  })
+                "
+              />
+              <datalist id="games">
+                <option v-for="game in Object.values(ServerGame)" :value="game">
+                  {{ game }}
+                </option>
+              </datalist>
+              <select
+                name="itemsPerPage"
+                id=""
+                class="px-5 h-14 sm:w-64 border-secondary/90 text-white bg-secondary/100 border-2 border-solid rounded-lg focus:outline-none"
+                v-model="itemsPerPage"
+                @change="
+                  $router.push({
+                    query: { ...$route.query, itemsPerPage: itemsPerPage },
+                  })
+                "
               >
-                <option value="all" class="bg-black">All Category</option>
-                <option value="drawing">Drawing</option>
-                <option value="alien-space">Alien Space</option>
-                <option value="hunter-sniper">Hunter Sniper</option>
-                <option value="collage">Collage</option>
-                <option value="game-one">Game one</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
               </select>
             </div>
           </div>
