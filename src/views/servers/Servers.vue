@@ -17,6 +17,8 @@ const itemsPerPage = ref(
     ? Number(itemsPerPageParam.value)
     : 10
 );
+const itemsPerPageOptions = [10, 20, 50, 100];
+
 </script>
 
 <template>
@@ -63,10 +65,9 @@ const itemsPerPage = ref(
                   })
                 "
               >
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
+                <option v-for="option in itemsPerPageOptions" :value="option">
+                  {{ option }}
+                </option>
               </select>
             </div>
           </div>
