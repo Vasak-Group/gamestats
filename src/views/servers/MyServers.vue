@@ -1,5 +1,13 @@
 <script setup lang="ts">
 import breadcrumbsIMG from "@/assets/img/breadcrumbs-bg.webp";
+import AddServer from "@/components/modals/AddServer.vue";
+import { ref } from "vue";
+
+const addServerModal = ref(false);
+
+const toggleModal = () => {
+  addServerModal.value = !addServerModal.value;
+};
 </script>
 
 <template>
@@ -11,4 +19,16 @@ import breadcrumbsIMG from "@/assets/img/breadcrumbs-bg.webp";
       <span class="logo text-5xl uppercase">My Servers</span>
     </div>
   </section>
+  <div class="container mx-auto">
+    <div class="flex justify-end mb-6">
+      <button
+        @click="toggleModal"
+        class="px-6 h-14 bg-primary text-white rounded-2xl hover:bg-primary/80 transition-all"
+      >
+        Add Server
+      </button>
+    </div>
+    
+  </div>
+  <AddServer v-if="addServerModal" @close="toggleModal" />
 </template>
