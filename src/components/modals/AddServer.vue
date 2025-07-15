@@ -1,12 +1,63 @@
 <script setup lang="ts">
 import { ServerGame } from "@/enums/games";
+import { api } from "@/services/backendConnector";
 import { ref } from "vue";
+import { useToast } from "vue-toast-notification";
+import { authStore } from "@/stores/auth.store";
 
+const $emit = defineEmits(["close"]);
+const $toast = useToast();
+const auth = authStore();
 const serverName = ref("");
 const ip = ref("");
 const port = ref();
 const game = ref<ServerGame | undefined>(undefined);
 const description = ref("");
+
+const addServer = async () => {
+  if (!serverName.value || !ip.value || !port.value || !game.value) {
+    $toast.error("Please fill in all required fields.", {
+      position: "top-right",
+      duration: 3000,
+    });
+    return;
+  }
+
+  try {
+    const serverData = {
+      name: serverName.value,
+      ip: ip.value,
+      port: port.value,
+      game: game.value,
+      description: description.value,
+    };
+
+    const response = await api.POST(
+      "/server",
+      serverData,
+      auth.token as string
+    );
+
+    if (response.status !== 201) {
+      $toast.error(`Failed to add server: ${response.statusText}`, {
+        position: "top-right",
+        duration: 3000,
+      });
+    } else {
+      $toast.success("Server added successfully!", {
+        position: "top-right",
+        duration: 3000,
+      });
+    }
+
+    $emit("close");
+  } catch (error) {
+    $toast.error(`Error adding server: ${error}`, {
+      position: "top-right",
+      duration: 3000,
+    });
+  }
+};
 </script>
 
 <template>
@@ -17,7 +68,7 @@ const description = ref("");
       class="bg-secondary/100 border-2 border-solid rounded-2xl border-secondary/90 p-12"
     >
       <h2 class="text-xl font-bold mb-6">Add Server</h2>
-      <form class="grid grid-cols-2 gap-4">
+      <form class="grid grid-cols-2 gap-4" @submit.prevent="addServer">
         <div>
           <input
             type="text"

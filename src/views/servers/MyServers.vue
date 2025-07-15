@@ -1,14 +1,36 @@
 <script setup lang="ts">
 import breadcrumbsIMG from "@/assets/img/breadcrumbs-bg.webp";
 import AddServer from "@/components/modals/AddServer.vue";
-import { ref } from "vue";
+import { api } from "@/services/backendConnector";
+import { onMounted, Ref, ref } from "vue";
+import { authStore } from "@/stores/auth.store";
 
+
+const auth = authStore();
 const addServerModal = ref(false);
 const filterServers = ref("");
+const myServers: Ref<any[]> = ref([]); // This will hold the list of servers
+
+const fetchMyServers = async () => {
+  try {
+    const response = await api.GET("/server/my", auth.token as string);
+    if (response.status === 200) {
+      myServers.value = await response.json();
+    } else {
+      console.error("Failed to fetch servers:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error fetching servers:", error);
+  }
+};
 
 const toggleModal = () => {
   addServerModal.value = !addServerModal.value;
 };
+
+onMounted(() => {
+  fetchMyServers();
+});
 </script>
 
 <template>
@@ -21,7 +43,11 @@ const toggleModal = () => {
     </div>
   </section>
   <div class="container mx-auto grid grid-cols-1 md:grid-cols-3">
-    <div class="flex mb-6 col-span-2"></div>
+    <div class="flex flex-col mb-6 col-span-2">
+      <ul>
+        <li v-for="server in myServers" :key="server.id">{{ server.name }}</li>
+      </ul>
+    </div>
     <div class="col-span-1">
       <input
         type="text"
