@@ -101,7 +101,7 @@ onMounted(() => {
               </RouterLink>
               <ul
                 v-if="item.children"
-                class="submenu-nav absolute left-0 z-50 bg-secondary/90 rounded-lg mt-14 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-4 transition-all duration-500 p-4 w-44"
+                class="submenu-nav absolute left-0 z-50 bg-secondary/90 rounded-2xl mt-14 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-4 transition-all duration-500 p-4 w-44"
               >
                 <li v-for="child in item.children" :key="child.name">
                   <RouterLink
@@ -130,7 +130,7 @@ onMounted(() => {
                   class="inline-block w-8 h-8 rounded-full ml-2"
                 />
                 <ul
-                  class="submenu-nav absolute left-0 z-50 bg-secondary/90 rounded-lg mt-14 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-4 transition-all duration-500 p-4 w-44"
+                  class="submenu-nav absolute left-0 z-50 bg-secondary/90 rounded-2xl mt-14 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-4 transition-all duration-500 p-4 w-44"
                 >
                   <li>
                     <RouterLink

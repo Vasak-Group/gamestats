@@ -103,18 +103,18 @@ onMounted(async () => {
                 type="text"
                 v-model="user.username"
                 placeholder="Username"
-                class="px-6 h-14 mb-6 border-secondary-90 bg-secondary-100 hover:border-primary transition-all border-2 border-solid block rounded-md w-full focus:outline-none"
+                class="px-6 h-14 mb-6 border-secondary-90 bg-secondary-100 hover:border-primary transition-all border-2 border-solid block rounded-2xl w-full focus:outline-none"
               />
               <input
                 type="email"
                 v-model="user.email"
                 placeholder="Email"
                 readonly
-                class="px-6 h-14 mb-6 border-secondary-90 bg-secondary-100 hover:border-primary transition-all border-2 border-solid block rounded-md w-full focus:outline-none"
+                class="px-6 h-14 mb-6 border-secondary-90 bg-secondary-100 hover:border-primary transition-all border-2 border-solid block rounded-2xl w-full focus:outline-none"
               />
               <button
                 type="submit"
-                class="text-white font-exo inline-block text-center rounded-2xl font-bold group hover:opacity-80 leading-11 h-12 w-32 sm:h-15 sm:w-40 sm:leading-12 rounded-22 bg-primary"
+                class="text-white font-exo inline-block text-center rounded-2xl font-bold group hover:opacity-80 leading-11 h-12 w-32 sm:h-15 sm:w-40 sm:leading-12 rounded-2xl bg-primary"
               >
                 Save Changes
               </button>
@@ -137,7 +137,7 @@ onMounted(async () => {
           </h2>
           <div class="mt-8 mx-6">
             <RouterLink
-              class="text-white inline-block text-center rounded-2xl font-bold group hover:opacity-80 leading-11 h-12 w-32 sm:h-15 sm:w-40 sm:leading-12 rounded-22 bg-primary"
+              class="text-white inline-block text-center rounded-2xl font-bold group hover:opacity-80 leading-11 h-12 w-32 sm:h-15 sm:w-40 sm:leading-12 rounded-2xl bg-primary"
               to="servers/my">
               My Servers
             </RouterLink>

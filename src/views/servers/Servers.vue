@@ -39,7 +39,7 @@ const itemsPerPageOptions = [10, 20, 50, 100];
             <div class="flex items-center gap-4">
               <input
                 id="cats"
-                class="px-5 h-14 sm:w-64 border-secondary/90 text-white bg-secondary/100 border-2 border-solid rounded-lg focus:outline-none"
+                class="px-5 h-14 sm:w-64 border-secondary/90 text-white bg-secondary/100 border-2 border-solid rounded-2xl focus:outline-none"
                 list="games"
                 placeholder="Select a game"
                 v-model="currentGame"
@@ -57,7 +57,7 @@ const itemsPerPageOptions = [10, 20, 50, 100];
               <select
                 name="itemsPerPage"
                 id=""
-                class="px-5 h-14 sm:w-64 border-secondary/90 text-white bg-secondary/100 border-2 border-solid rounded-lg focus:outline-none"
+                class="px-5 h-14 sm:w-64 border-secondary/90 text-white bg-secondary/100 border-2 border-solid rounded-2xl focus:outline-none"
                 v-model="itemsPerPage"
                 @change="
                   $router.push({
@@ -76,7 +76,7 @@ const itemsPerPageOptions = [10, 20, 50, 100];
               <input
                 type="text"
                 placeholder="Search"
-                class="px-5 h-14 sm:w-64 border-secondary/90 text-white bg-secondary border-2 border-solid rounded-lg focus:outline-none"
+                class="px-5 h-14 sm:w-64 border-secondary/90 text-white bg-secondary border-2 border-solid rounded-2xl focus:outline-none"
               /><button
                 type="submit"
                 class="absolute px-5 top-0 right-0 bg-transparent transition-all inline-block h-full hover:text-primary"

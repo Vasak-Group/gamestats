@@ -64,7 +64,7 @@ const login = async () => {
   <form class="form-login mt-10" @submit.prevent="login">
     <div class="single-fild">
       <input
-        class="px-6 h-14 mb-6 border-secondary-90 bg-secondary-100 hover:border-primary transition-all border-2 border-solid block rounded-md w-full focus:outline-none"
+        class="px-6 h-14 mb-6 border-secondary-90 bg-secondary-100 hover:border-primary transition-all border-2 border-solid block rounded-2xl w-full focus:outline-none"
         type="email"
         placeholder="E-mail"
         v-model="credentials.email"
@@ -83,7 +83,7 @@ const login = async () => {
     </div>
     <div class="single-fild">
       <input
-        class="px-6 h-14 mb-6 border-secondary-90 bg-secondary-100 hover:border-primary transition-all border-2 border-solid block rounded-md w-full focus:outline-none"
+        class="px-6 h-14 mb-6 border-secondary-90 bg-secondary-100 hover:border-primary transition-all border-2 border-solid block rounded-2xl w-full focus:outline-none"
         type="password"
         placeholder="password"
         v-model="credentials.password"
@@ -97,7 +97,7 @@ const login = async () => {
     <div class="button text-center">
       <button
         type="submit"
-        class="text-white font-exo inline-block text-center rounded-2xl font-bold group hover:opacity-80 leading-11 h-12 w-32 sm:h-15 sm:w-40 sm:leading-12 rounded-22 bg-primary"
+        class="text-white font-exo inline-block text-center rounded-2xl font-bold group hover:opacity-80 leading-11 h-12 w-32 sm:h-15 sm:w-40 sm:leading-12 rounded-2xl bg-primary"
       >
         Login
       </button>
