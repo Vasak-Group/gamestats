@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
+import { getGameImage } from "@/services/imageManager";
+import { ServerGame } from "@/enums/games";
 
 const props = defineProps<{
   id: number;
   name: string;
   ip: string;
   port: number;
-  game: string;
+  game: ServerGame;
   description: string;
   status: "UNKNOWN" | "ONLINE" | "OFFLINE";
   lastStatus: string;
@@ -33,7 +35,7 @@ const formatDate = (dateString: string): string => {
     <div class="flex items-center">
       <div>
         <img
-          src="http://example.com/server-icon.png"
+          :src="getGameImage(props.game)"
           alt="Server Icon"
           class="w-12 h-12 mr-4"
         />
