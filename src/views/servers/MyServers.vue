@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import breadcrumbsIMG from "@/assets/img/breadcrumbs-bg.webp";
 import AddServer from "@/components/modals/AddServer.vue";
+import MyServerCard from "@/components/cards/MyServerCard.vue";
 import { api } from "@/services/backendConnector";
-import { onMounted, Ref, ref } from "vue";
+import { computed, onMounted, Ref, ref } from "vue";
 import { authStore } from "@/stores/auth.store";
 
 
@@ -28,6 +29,12 @@ const toggleModal = () => {
   addServerModal.value = !addServerModal.value;
 };
 
+const filteredServers = computed(() => {
+  return myServers.value.filter(server =>
+    server.name.toLowerCase().includes(filterServers.value.toLowerCase())
+  );
+});
+
 onMounted(() => {
   fetchMyServers();
 });
@@ -35,20 +42,22 @@ onMounted(() => {
 
 <template>
   <section
-    class="breadcrumb-wrap relative pb-24 pt-24 lg:pt-36 mb-24 bg-cover bg-bottom"
+    class="breadcrumb-wrap relative pb-16 pt-16 lg:pt-32 mb-16 bg-cover bg-bottom"
     :style="{ backgroundImage: `url(${breadcrumbsIMG})` }"
   >
     <div class="text-center mt-12 transform">
       <span class="logo text-5xl uppercase">My Servers</span>
     </div>
   </section>
-  <div class="container mx-auto grid grid-cols-1 md:grid-cols-3">
-    <div class="flex flex-col mb-6 col-span-2">
-      <ul>
-        <li v-for="server in myServers" :key="server.id">{{ server.name }}</li>
-      </ul>
+  <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 mb-6">
+    <div class="flex flex-col mb-6 col-span-2 px-3">
+      <MyServerCard
+        v-for="server in filteredServers"
+        :key="server.id"
+        v-bind="server"
+      />
     </div>
-    <div class="col-span-1">
+    <div class="col-span-1 px-3">
       <input
         type="text"
         placeholder="Search servers..."
