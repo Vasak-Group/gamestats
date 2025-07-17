@@ -56,6 +56,14 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "rank",
         name: "ServerRank",
+        component: () => import("@/views/servers/Rank.vue"),
+        meta: {
+          layout: "WebSiteLayout",
+        },
+      },
+      {
+        path: "list",
+        name: "ServerList",
         component: () => import("@/views/servers/Servers.vue"),
         meta: {
           layout: "WebSiteLayout",

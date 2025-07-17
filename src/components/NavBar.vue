@@ -20,7 +20,10 @@ const menuItemsInvited = [
   {
     name: "Servers",
     path: "/servers",
-    children: [{ name: "Rank", path: "/servers/rank" }],
+    children: [
+      { name: "List", path: "/servers/list" },
+      { name: "Rank", path: "/servers/rank" },
+    ],
   },
 ];
 
@@ -30,6 +33,7 @@ const menuItemsUser = [
     name: "Servers",
     path: "/servers",
     children: [
+      { name: "List", path: "/servers/list" },
       { name: "Rank", path: "/servers/rank" },
       { name: "My Servers", path: "/servers/my" },
     ],
@@ -64,7 +68,7 @@ const openSubmenu = (name: string) => {
 const logout = () => {
   auth.clearUser();
   $toast.success("Logout successful", {
-    position: "top-right",
+    position: "top",
     duration: 3000,
   });
   setTimeout(() => {
