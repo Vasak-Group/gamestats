@@ -17,7 +17,7 @@ const description = ref("");
 const addServer = async () => {
   if (!serverName.value || !ip.value || !port.value || !game.value) {
     $toast.error("Please fill in all required fields.", {
-      position: "top-right",
+      position: "top",
       duration: 3000,
     });
     return;
@@ -40,12 +40,12 @@ const addServer = async () => {
 
     if (response.status !== 201) {
       $toast.error(`Failed to add server: ${response.statusText}`, {
-        position: "top-right",
+        position: "top",
         duration: 3000,
       });
     } else {
       $toast.success("Server added successfully!", {
-        position: "top-right",
+        position: "top",
         duration: 3000,
       });
     }
@@ -53,7 +53,7 @@ const addServer = async () => {
     $emit("close");
   } catch (error) {
     $toast.error(`Error adding server: ${error}`, {
-      position: "top-right",
+      position: "top",
       duration: 3000,
     });
   }

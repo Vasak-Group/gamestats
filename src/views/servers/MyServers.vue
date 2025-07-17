@@ -10,7 +10,7 @@ import { authStore } from "@/stores/auth.store";
 const auth = authStore();
 const addServerModal = ref(false);
 const filterServers = ref("");
-const myServers: Ref<any[]> = ref([]); // This will hold the list of servers
+const myServers: Ref<any[]> = ref([]);
 
 const fetchMyServers = async () => {
   try {

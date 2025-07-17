@@ -15,7 +15,7 @@ const credentials = ref({
 const login = async () => {
   if (!credentials.value.email || !credentials.value.password) {
     $toast.error("Missing credentials", {
-      position: "top-right",
+      position: "top",
       duration: 3000,
     });
     return;
@@ -32,7 +32,7 @@ const login = async () => {
       auth.setSession(data.access_token);
 
       $toast.success("Login successful", {
-        position: "top-right",
+        position: "top",
         duration: 3000,
       });
 
@@ -42,7 +42,7 @@ const login = async () => {
     } else {
       console.error("Login failed:", response);
       $toast.error("Login failed: Check your credentials", {
-        position: "top-right",
+        position: "top",
         duration: 3000,
       });
     }
@@ -52,7 +52,7 @@ const login = async () => {
     $toast.error(
       "Login error: An unexpected error occurred. Please try again later.",
       {
-        position: "top-right",
+        position: "top",
         duration: 3000,
       }
     );

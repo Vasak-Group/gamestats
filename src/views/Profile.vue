@@ -30,18 +30,18 @@ const updateProfile = async () => {
       const updatedUser = await response.json();
       user.value = updatedUser;
       $toast.success("Profile updated successfully!", {
-        position: "top-right",
+        position: "top",
         duration: 3000,
       });
     } else {
       $toast.error("Failed to update profile:", {
-        position: "top-right",
+        position: "top",
         duration: 3000,
       });
     }
   } catch (error) {
     $toast.error("Error updating profile:", {
-      position: "top-right",
+      position: "top",
       duration: 3000,
     });
   }

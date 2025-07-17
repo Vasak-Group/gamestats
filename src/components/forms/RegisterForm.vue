@@ -51,7 +51,7 @@ const register = async () => {
 
     console.error("Email validation error:", errorInfo);
     $toast.error(`${errorTitle} : ${errorInfo}`, {
-      position: "top-right",
+      position: "top",
       duration: 3000,
     });
     return;
@@ -64,7 +64,7 @@ const register = async () => {
     }
     console.error("Password validation error:", errorInfo);
     $toast.error(`${errorTitle} : ${errorInfo}`, {
-      position: "top-right",
+      position: "top",
       duration: 3000,
     });
     return;
@@ -81,7 +81,7 @@ const register = async () => {
 
     if (response.status == 201) {
       $toast.success("Registration successful", {
-        position: "top-right",
+        position: "top",
         duration: 3000,
       });
       setTimeout(() => {
@@ -93,7 +93,7 @@ const register = async () => {
       $toast.error(
         `Registration failed: Please check your data [${error.message}]`,
         {
-          position: "top-right",
+          position: "top",
           duration: 3000,
         }
       );
@@ -101,7 +101,7 @@ const register = async () => {
   } catch (error) {
     console.error("Error during registration:", error);
     $toast.error("Registration failed: Please try again later.", {
-      position: "top-right",
+      position: "top",
       duration: 3000,
     });
     return;
