@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import breadcrumbsIMG from "@/assets/img/breadcrumbs-bg.webp";
+import ServerCard from "@/components/cards/ServerCard.vue";
 import { ServerGame } from "@/enums/games";
-import { ref } from "vue";
+import { api } from "@/services/backendConnector";
+import { authStore } from "@/stores/auth.store";
+import { onMounted, Ref, ref } from "vue";
 import { useRoute } from "vue-router";
+import { useToast } from "vue-toast-notification";
 
+const auth = authStore();
 const route = useRoute();
-const currentGame = ref(route.query.game as ServerGame | undefined);
-const serverName = ref(route.query.serverName as string | undefined);
+const $toast = useToast();
+const currentGame = ref(route.query.game as ServerGame | "");
+const serverName = ref(route.query.serverName as string | "");
 const pageParam = ref(route.query.page);
 const page = ref(
-  typeof pageParam.value === "string" ? Number(pageParam.value) : 0
+  typeof pageParam.value === "string" ? Number(pageParam.value) : 1
 );
 const itemsPerPageParam = ref(route.query.itemsPerPage);
 const itemsPerPage = ref(
@@ -18,7 +24,32 @@ const itemsPerPage = ref(
     : 10
 );
 const itemsPerPageOptions = [10, 20, 50, 100];
+const serverList: Ref<any[]> = ref([]);
 
+const getServers = async () => {
+  try {
+    const response = await api.GET(
+      `/server?page=${page.value}&limit=${itemsPerPage.value}&game=${
+        currentGame.value || ""
+      }&serverName=${serverName.value || ""}`,
+      auth.token as string
+    );
+    if (!response.ok) {
+      console.error("Error fetching servers:", response);
+      throw new Error(`Error fetching servers: ${response.statusText}`);
+    }
+    serverList.value = await response.json();
+  } catch (error) {
+    $toast.error(`Error fetching servers: ${error}`, {
+      position: "top",
+      duration: 5000,
+    });
+  }
+};
+
+onMounted(() => {
+  getServers();
+});
 </script>
 
 <template>
@@ -27,7 +58,7 @@ const itemsPerPageOptions = [10, 20, 50, 100];
     :style="{ backgroundImage: `url(${breadcrumbsIMG})` }"
   >
     <div class="text-center mt-12 transform">
-      <span class="logo text-5xl uppercase">Servers Ranks</span>
+      <span class="logo text-5xl uppercase">Servers List</span>
     </div>
   </section>
 
@@ -77,17 +108,26 @@ const itemsPerPageOptions = [10, 20, 50, 100];
                 type="text"
                 placeholder="Search"
                 class="px-5 h-14 sm:w-64 border-secondary/90 text-white bg-secondary border-2 border-solid rounded-2xl focus:outline-none"
-              /><button
-                type="submit"
+              />
+              <button
+                type="button"
+                @click.prevent="getServers"
                 class="absolute px-5 top-0 right-0 bg-transparent transition-all inline-block h-full hover:text-primary"
               >
+                SEARCH
                 <i class="icofont-search-1"></i>
               </button>
             </form>
           </div>
         </div>
       </div>
-      <div class="flex"></div>
+      <div class="flex flex-col">
+        <ServerCard
+          v-for="server in serverList"
+          :key="server.id"
+          v-bind="server"
+        />
+      </div>
     </div>
   </section>
 </template>
