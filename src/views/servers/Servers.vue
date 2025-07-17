@@ -121,7 +121,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="grid grid-cols-1 md:grid-cols-2  gap-6">
         <ServerCard
           v-for="server in serverList"
           :key="server.id"

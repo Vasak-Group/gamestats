@@ -30,7 +30,7 @@ const formatDate = (dateString: string): string => {
 
 <template>
   <div
-    class="w-full p-4 bg-secondary rounded-2xl shadow-md flex flex-row justify-between items-center mb-6"
+    class="w-full p-4 bg-secondary rounded-2xl shadow-md flex flex-row justify-between items-center"
   >
     <div class="flex items-center">
       <div>
