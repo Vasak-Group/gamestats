@@ -54,7 +54,7 @@ onMounted(() => {
 
 <template>
   <section
-    class="breadcrumb-wrap relative pb-24 pt-24 lg:pt-36 mb-24 bg-cover bg-bottom"
+    class="breadcrumb-wrap relative pb-12 pt-24 lg:pt-36 mb-6 bg-cover bg-bottom"
     :style="{ backgroundImage: `url(${breadcrumbsIMG})` }"
   >
     <div class="text-center mt-12 transform">
