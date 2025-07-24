@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { authStore } from "@/stores/auth.store";
 import { useToast } from "vue-toast-notification";
 import md5 from "md5";
@@ -164,9 +166,7 @@ onMounted(() => {
             @click="toggleMenu"
             class="flex flex-col space-y-1.5 ml-8 lg:hidden"
           >
-            <span class="line h-0.5 w-6 inline-block bg-white"></span>
-            <span class="line h-0.5 w-6 inline-block bg-white"></span>
-            <span class="line h-0.5 w-6 inline-block bg-white"></span>
+            <FontAwesomeIcon :icon="faBars" class="text-white text-2xl" />
           </button>
 
           <div
