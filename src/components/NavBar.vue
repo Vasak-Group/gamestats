@@ -2,7 +2,11 @@
 import { computed, onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faClose,
+  faAngleDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { authStore } from "@/stores/auth.store";
 import { useToast } from "vue-toast-notification";
 import md5 from "md5";
@@ -104,6 +108,11 @@ onMounted(() => {
             <RouterLink class="font-semibold uppercase" :to="item.path">
               {{ item.name }}
             </RouterLink>
+            <FontAwesomeIcon
+              v-if="item.children"
+              :icon="faAngleDown"
+              class="text-white text-lg cursor-pointer"
+            />
             <ul
               v-if="item.children"
               class="submenu-nav absolute left-0 z-50 bg-secondary/90 rounded-2xl mt-14 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:mt-4 transition-all duration-500 p-4 w-44"
@@ -181,7 +190,7 @@ onMounted(() => {
                 @click="toggleMenu"
                 class="flex justify-end items-center ml-auto"
               >
-                Close <i class="icofont-close"></i>
+                <FontAwesomeIcon :icon="faClose" class="text-white text-2xl" />
               </button>
               <ul class="mt-10 mb-10">
                 <li
@@ -200,7 +209,10 @@ onMounted(() => {
                     @click="openSubmenu(item.name)"
                     class="absolute right-0 justify-center cursor-pointer bg-transparent"
                   >
-                    mas
+                    <FontAwesomeIcon
+                      :icon="faAngleDown"
+                      class="text-white text-lg"
+                    />
                   </button>
                   <ul
                     v-if="item.children"
@@ -224,6 +236,7 @@ onMounted(() => {
                 <ul class="mt-10 mb-10">
                   <li class="relative font-medium block pb-3 mb-3">
                     {{ user.username }}
+
                     <img
                       :src="profileImage"
                       alt="Profile Image"
@@ -231,9 +244,12 @@ onMounted(() => {
                     />
                     <button
                       @click="openSubmenu(user.username)"
-                      class="absolute right-0 justify-center cursor-pointer bg-transparent"
+                      class="justify-center cursor-pointer bg-transparent"
                     >
-                      mas
+                      <FontAwesomeIcon
+                        :icon="faAngleDown"
+                        class="text-white text-lg ml-4"
+                      />
                     </button>
                     <ul
                       :id="`submenu-${user.username}`"
