@@ -69,6 +69,14 @@ const routes: Array<RouteRecordRaw> = [
           layout: "WebSiteLayout",
         },
       },
+      {
+        path: ":id",
+        name: "ServerDetails",
+        component: () => import("@/views/servers/Server.vue"),
+        meta: {
+          layout: "WebSiteLayout",
+        },
+      },
     ],
   },
 ];

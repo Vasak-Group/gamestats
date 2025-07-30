@@ -7,7 +7,6 @@ import { api } from "@/services/backendConnector";
 import { onMounted, ref, Ref } from "vue";
 import { useRoute } from "vue-router";
 import { useToast } from "vue-toast-notification";
-import { server } from "typescript";
 
 const auth = authStore();
 const route = useRoute();
